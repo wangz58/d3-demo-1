@@ -8,8 +8,8 @@ var makeChart = function(data) {
         movies.push(data[i].Title);
     }
 
-    var width = 960,
-        height = 500;
+    var width = 900,
+        height = 450;
 
     var y = d3.scale.linear()
         .range([height, 0])
@@ -20,39 +20,48 @@ var makeChart = function(data) {
         .attr("height", height);
 
     var barWidth = width / ratings.length;
+    
+    var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function(d) { return d; })
+
+    chart.call(tip);
 
     var bar = chart.selectAll("g")
         .data(ratings)
         .enter().append("g")
-        .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
+        .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide);
 
     bar.append("rect")
         .attr("y", function(d) { return y(d); })
         .attr("height", function(d) { return height - y(d); })
-        .attr("width", barWidth - 1);
+        .attr("width", barWidth - 1)
+        .attr("fill", function(d) {
+            return "rgb( " + (d*20) + " , 0, 0)"
+        });
 
     bar.append("text")
-        .attr("x", barWidth / 2)
+        .attr("x", barWidth / 2)  
         .attr("y", function(d) { return y(d) + 3; })
-        .attr("dy", ".75em")
+        .attr("dy", "1em")
         .text(function(d) { return d; });
 
-    // var chart = d3.select(".chart")
-    //     .selectAll("div")
-    //         .data(ratings)
-    //     .enter().append("div")
-    //         .style("width", function(d) { return d*100 + "px"; })
-    //         .style("height", function(d) { return "30px" })
-    //         .text(function(d) { return d; })
-
-    // d3.select("body").transition()
-    //     .delay(750)
-    //     .style("background-color", "black");
+    bar.append("text")
+        .data(movies)
+        .attr("x", barWidth/2)
+        .attr("y", height-30)
+        .text(function(d) { return d; })
+        .style("font-size", function(d) {
+            if (d.length > 10) {
+                return "8px"
+            } else {
+                return "12px"
+            }
+        });
 }
 
-function type(d) {
-  d.value = +d.value; // coerce to number
-  return d;
-}
 
 $.getJSON('shyamalan.json').then(makeChart); // processes the JSON file
