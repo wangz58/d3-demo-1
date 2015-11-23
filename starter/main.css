@@ -1,0 +1,32 @@
+.container {
+	padding: 50px;
+}
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: black;
+} 
+
+.chart text {
+  fill: white;
+  font-family:'Comic Sans MS', 'sans-serif';
+  font-size: 15px;
+  text-anchor: middle;
+}
+
+.titles {
+  font-size: 10px;
+}
+
+/*.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}*/

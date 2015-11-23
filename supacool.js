@@ -21,19 +21,19 @@ var makeChart = function(data) {
 
     var barWidth = width / ratings.length;
     
-    var tip = d3.tip()
-      .attr('class', 'd3-tip')
-      .offset([-10, 0])
-      .html(function(d) { return d; })
+    // var tip = d3.tip()
+    //   .attr('class', 'd3-tip')
+    //   .offset([-10, 0])
+    //   .html(function(d) { return d; })
 
-    chart.call(tip);
+    // chart.call(tip);
 
     var bar = chart.selectAll("g.transform")
         .data(ratings)
         .enter().append("g")
         .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide);
+        // .on('mouseover', tip.show)
+        // .on('mouseout', tip.hide);
 
     bar.append("rect")
         .attr("y", function(d) { return y(d); })
